@@ -99,7 +99,7 @@ export function TokenActions() {
               _hover={{ borderColor: 'purple.400' }}
               _focus={{ borderColor: 'purple.500', boxShadow: '0 0 0 1px var(--chakra-colors-purple-500)' }}
             />
-            <InputRightAddon children="SCOTR" bg="whiteAlpha.200" color="whiteAlpha.900" />
+            <InputRightAddon children="SCOTT" bg="whiteAlpha.200" color="whiteAlpha.900" />
           </InputGroup>
         </FormControl>
 

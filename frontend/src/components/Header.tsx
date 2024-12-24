@@ -8,7 +8,7 @@ export function Header() {
         <FaCoins size={32} color="#FFD700" />
         <Box>
           <Heading size="lg" bgGradient="linear(to-r, cyan.400, purple.500)" bgClip="text">
-            Scottcoin (SCOTR)
+            Scottcoin (SCOTT)
           </Heading>
           <Text fontSize="sm" color="whiteAlpha.700">
             Your Gateway to the Future of Digital Assets

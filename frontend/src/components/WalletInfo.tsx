@@ -90,7 +90,7 @@ export function WalletInfo() {
           </GridItem>
           <GridItem>
             <Stat>
-              <StatLabel color="whiteAlpha.700">SCOTR Balance</StatLabel>
+              <StatLabel color="whiteAlpha.700">SCOTT Balance</StatLabel>
               <StatNumber>
                 <Text display="flex" alignItems="center" gap={2}>
                   <FaCoins />

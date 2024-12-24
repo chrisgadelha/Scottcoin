@@ -96,7 +96,7 @@ export function TransactionHistory() {
                 <Td color="whiteAlpha.800">{formatTimestamp(tx.timestamp)}</Td>
                 <Td color="whiteAlpha.800">{formatAddress(tx.from)}</Td>
                 <Td color="whiteAlpha.800">{formatAddress(tx.to)}</Td>
-                <Td color="whiteAlpha.800">{Number(tx.amount).toFixed(2)} SCOTR</Td>
+                <Td color="whiteAlpha.800">{Number(tx.amount).toFixed(2)} SCOTT</Td>
                 <Td>
                   <Link
                     href={`https://sepolia.etherscan.io/tx/${tx.hash}`}
