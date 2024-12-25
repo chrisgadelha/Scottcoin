@@ -13,7 +13,7 @@ A modern ERC-20 token with interactive features built on the Ethereum blockchain
 
 ## 🚀 Live Demo
 
-Visit [Scottcoin dApp](https://your-deployment-url.com) to interact with the token on Sepolia testnet.
+Visit [Scottcoin dApp](https://scottcoin.vercel.app/) to interact with the token on Sepolia testnet.
 
 ## 🛠️ Technology Stack
 
