@@ -2,7 +2,6 @@
 
 A modern ERC-20 token with interactive features built on the Ethereum blockchain.
 
-![Scottcoin Header](./frontend/public/preview.png)
 
 ## 🌟 Features
 
