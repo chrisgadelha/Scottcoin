@@ -2,8 +2,8 @@
   "_format": "hh-sol-cache-2",
   "files": {
     "/home/gadelha-ubuntu/Projetos WEB3/Curso Luiz Tools/Scottcoin/contracts/Scottcoin.sol": {
-      "lastModificationDate": 1734997741579,
-      "contentHash": "0498cee7d0acb12ca8d179fdbd29ae21",
+      "lastModificationDate": 1735158611379,
+      "contentHash": "d2ddb79bbaf120ed0a24416723f38b5b",
       "sourceName": "contracts/Scottcoin.sol",
       "solcConfig": {
         "version": "0.8.20",

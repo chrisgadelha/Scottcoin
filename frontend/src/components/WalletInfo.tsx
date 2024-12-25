@@ -21,7 +21,7 @@ export function WalletInfo() {
         setBalance(ethers.formatEther(balance));
 
         // Add your token contract address here
-        const tokenAddress = '0x8Eb1eEBfC0589dae5ac4adC63567cb670d907D6e';
+        const tokenAddress = 'NOVO_ENDEREÇO_DO_CONTRATO';
         const tokenAbi = ["function balanceOf(address) view returns (uint256)"];
         const tokenContract = new ethers.Contract(tokenAddress, tokenAbi, provider);
         const tokenBalance = await tokenContract.balanceOf(account);

@@ -18,12 +18,21 @@ const config: HardhatUserConfig = {
     hardhat: {},
     sepolia: {
       url: process.env.SEPOLIA_RPC_URL || "",
-      accounts: process.env.PRIVATE_KEY ? [process.env.PRIVATE_KEY] : []
+      accounts: process.env.PRIVATE_KEY ? [process.env.PRIVATE_KEY] : [],
+      timeout: parseInt(process.env.NETWORK_TIMEOUT || "300000"),
+      gasPrice: "auto",
+      gas: "auto",
+      httpHeaders: {
+        "Content-Type": "application/json",
+      }
     },
     mainnet: {
       url: process.env.MAINNET_RPC_URL || "",
       accounts: process.env.PRIVATE_KEY ? [process.env.PRIVATE_KEY] : []
     }
+  },
+  mocha: {
+    timeout: 100000
   }
 };
 

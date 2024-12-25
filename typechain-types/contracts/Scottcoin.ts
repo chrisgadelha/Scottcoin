@@ -26,25 +26,39 @@ import type {
 export interface ScottcoinInterface extends Interface {
   getFunction(
     nameOrSignature:
+      | "QUIZ_REWARD"
       | "allowance"
       | "approve"
       | "balanceOf"
+      | "calculateReward"
       | "decimals"
+      | "getPendingReward"
+      | "getStakingBalance"
+      | "hasCompletedQuiz"
+      | "lastStakeTime"
       | "mint"
       | "name"
       | "owner"
       | "renounceOwnership"
+      | "stake"
+      | "stakingBalance"
+      | "submitQuizAnswers"
       | "symbol"
       | "totalSupply"
       | "transfer"
       | "transferFrom"
       | "transferOwnership"
+      | "unstake"
   ): FunctionFragment;
 
   getEvent(
     nameOrSignatureOrTopic: "Approval" | "OwnershipTransferred" | "Transfer"
   ): EventFragment;
 
+  encodeFunctionData(
+    functionFragment: "QUIZ_REWARD",
+    values?: undefined
+  ): string;
   encodeFunctionData(
     functionFragment: "allowance",
     values: [AddressLike, AddressLike]
@@ -57,7 +71,27 @@ export interface ScottcoinInterface extends Interface {
     functionFragment: "balanceOf",
     values: [AddressLike]
   ): string;
+  encodeFunctionData(
+    functionFragment: "calculateReward",
+    values: [AddressLike]
+  ): string;
   encodeFunctionData(functionFragment: "decimals", values?: undefined): string;
+  encodeFunctionData(
+    functionFragment: "getPendingReward",
+    values: [AddressLike]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "getStakingBalance",
+    values: [AddressLike]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "hasCompletedQuiz",
+    values: [AddressLike]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "lastStakeTime",
+    values: [AddressLike]
+  ): string;
   encodeFunctionData(
     functionFragment: "mint",
     values: [AddressLike, BigNumberish]
@@ -67,6 +101,15 @@ export interface ScottcoinInterface extends Interface {
   encodeFunctionData(
     functionFragment: "renounceOwnership",
     values?: undefined
+  ): string;
+  encodeFunctionData(functionFragment: "stake", values: [BigNumberish]): string;
+  encodeFunctionData(
+    functionFragment: "stakingBalance",
+    values: [AddressLike]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "submitQuizAnswers",
+    values: [[boolean, boolean, boolean, boolean, boolean]]
   ): string;
   encodeFunctionData(functionFragment: "symbol", values?: undefined): string;
   encodeFunctionData(
@@ -85,16 +128,50 @@ export interface ScottcoinInterface extends Interface {
     functionFragment: "transferOwnership",
     values: [AddressLike]
   ): string;
+  encodeFunctionData(functionFragment: "unstake", values?: undefined): string;
 
+  decodeFunctionResult(
+    functionFragment: "QUIZ_REWARD",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(functionFragment: "allowance", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "approve", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "balanceOf", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "calculateReward",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(functionFragment: "decimals", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "getPendingReward",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "getStakingBalance",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "hasCompletedQuiz",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "lastStakeTime",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(functionFragment: "mint", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "name", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "owner", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "renounceOwnership",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(functionFragment: "stake", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "stakingBalance",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "submitQuizAnswers",
     data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "symbol", data: BytesLike): Result;
@@ -111,6 +188,7 @@ export interface ScottcoinInterface extends Interface {
     functionFragment: "transferOwnership",
     data: BytesLike
   ): Result;
+  decodeFunctionResult(functionFragment: "unstake", data: BytesLike): Result;
 }
 
 export namespace ApprovalEvent {
@@ -205,6 +283,8 @@ export interface Scottcoin extends BaseContract {
     event?: TCEvent
   ): Promise<this>;
 
+  QUIZ_REWARD: TypedContractMethod<[], [bigint], "view">;
+
   allowance: TypedContractMethod<
     [owner: AddressLike, spender: AddressLike],
     [bigint],
@@ -219,7 +299,29 @@ export interface Scottcoin extends BaseContract {
 
   balanceOf: TypedContractMethod<[account: AddressLike], [bigint], "view">;
 
+  calculateReward: TypedContractMethod<
+    [account: AddressLike],
+    [bigint],
+    "view"
+  >;
+
   decimals: TypedContractMethod<[], [bigint], "view">;
+
+  getPendingReward: TypedContractMethod<
+    [account: AddressLike],
+    [bigint],
+    "view"
+  >;
+
+  getStakingBalance: TypedContractMethod<
+    [account: AddressLike],
+    [bigint],
+    "view"
+  >;
+
+  hasCompletedQuiz: TypedContractMethod<[arg0: AddressLike], [boolean], "view">;
+
+  lastStakeTime: TypedContractMethod<[arg0: AddressLike], [bigint], "view">;
 
   mint: TypedContractMethod<
     [to: AddressLike, amount: BigNumberish],
@@ -232,6 +334,16 @@ export interface Scottcoin extends BaseContract {
   owner: TypedContractMethod<[], [string], "view">;
 
   renounceOwnership: TypedContractMethod<[], [void], "nonpayable">;
+
+  stake: TypedContractMethod<[amount: BigNumberish], [void], "nonpayable">;
+
+  stakingBalance: TypedContractMethod<[arg0: AddressLike], [bigint], "view">;
+
+  submitQuizAnswers: TypedContractMethod<
+    [answers: [boolean, boolean, boolean, boolean, boolean]],
+    [void],
+    "nonpayable"
+  >;
 
   symbol: TypedContractMethod<[], [string], "view">;
 
@@ -255,10 +367,15 @@ export interface Scottcoin extends BaseContract {
     "nonpayable"
   >;
 
+  unstake: TypedContractMethod<[], [void], "nonpayable">;
+
   getFunction<T extends ContractMethod = ContractMethod>(
     key: string | FunctionFragment
   ): T;
 
+  getFunction(
+    nameOrSignature: "QUIZ_REWARD"
+  ): TypedContractMethod<[], [bigint], "view">;
   getFunction(
     nameOrSignature: "allowance"
   ): TypedContractMethod<
@@ -277,8 +394,23 @@ export interface Scottcoin extends BaseContract {
     nameOrSignature: "balanceOf"
   ): TypedContractMethod<[account: AddressLike], [bigint], "view">;
   getFunction(
+    nameOrSignature: "calculateReward"
+  ): TypedContractMethod<[account: AddressLike], [bigint], "view">;
+  getFunction(
     nameOrSignature: "decimals"
   ): TypedContractMethod<[], [bigint], "view">;
+  getFunction(
+    nameOrSignature: "getPendingReward"
+  ): TypedContractMethod<[account: AddressLike], [bigint], "view">;
+  getFunction(
+    nameOrSignature: "getStakingBalance"
+  ): TypedContractMethod<[account: AddressLike], [bigint], "view">;
+  getFunction(
+    nameOrSignature: "hasCompletedQuiz"
+  ): TypedContractMethod<[arg0: AddressLike], [boolean], "view">;
+  getFunction(
+    nameOrSignature: "lastStakeTime"
+  ): TypedContractMethod<[arg0: AddressLike], [bigint], "view">;
   getFunction(
     nameOrSignature: "mint"
   ): TypedContractMethod<
@@ -295,6 +427,19 @@ export interface Scottcoin extends BaseContract {
   getFunction(
     nameOrSignature: "renounceOwnership"
   ): TypedContractMethod<[], [void], "nonpayable">;
+  getFunction(
+    nameOrSignature: "stake"
+  ): TypedContractMethod<[amount: BigNumberish], [void], "nonpayable">;
+  getFunction(
+    nameOrSignature: "stakingBalance"
+  ): TypedContractMethod<[arg0: AddressLike], [bigint], "view">;
+  getFunction(
+    nameOrSignature: "submitQuizAnswers"
+  ): TypedContractMethod<
+    [answers: [boolean, boolean, boolean, boolean, boolean]],
+    [void],
+    "nonpayable"
+  >;
   getFunction(
     nameOrSignature: "symbol"
   ): TypedContractMethod<[], [string], "view">;
@@ -318,6 +463,9 @@ export interface Scottcoin extends BaseContract {
   getFunction(
     nameOrSignature: "transferOwnership"
   ): TypedContractMethod<[newOwner: AddressLike], [void], "nonpayable">;
+  getFunction(
+    nameOrSignature: "unstake"
+  ): TypedContractMethod<[], [void], "nonpayable">;
 
   getEvent(
     key: "Approval"

@@ -35,7 +35,7 @@ export function TokenActions() {
       const provider = new ethers.BrowserProvider(window.ethereum);
       const signer = await provider.getSigner();
       
-      const tokenAddress = '0x8Eb1eEBfC0589dae5ac4adC63567cb670d907D6e';
+      const tokenAddress = 'NOVO_ENDEREÇO_DO_CONTRATO';
       const tokenAbi = [
         "function transfer(address to, uint256 amount) returns (bool)"
       ];

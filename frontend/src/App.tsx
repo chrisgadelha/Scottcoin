@@ -3,6 +3,8 @@ import { Header } from './components/Header';
 import { WalletInfo } from './components/WalletInfo';
 import { TokenActions } from './components/TokenActions';
 import { TransactionHistory } from './components/TransactionHistory';
+import { Quiz } from './components/Quiz';
+import { Staking } from './components/Staking';
 
 const theme = extendTheme({
   styles: {
@@ -27,6 +29,8 @@ function App() {
           <VStack spacing={8}>
             <Header />
             <WalletInfo />
+            <Quiz />
+            <Staking />
             <TokenActions />
             <TransactionHistory />
           </VStack>
