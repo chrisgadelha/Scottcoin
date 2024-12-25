@@ -21,6 +21,8 @@ import {
 import { ethers } from 'ethers';
 import { FaLock, FaUnlock, FaCoins } from 'react-icons/fa';
 
+const CONTRACT_ADDRESS = '0xB47d6CD97E198b001Ec46ed716d73b5f07452160';
+
 export function Staking() {
   const [stakeAmount, setStakeAmount] = useState('');
   const [stakedBalance, setStakedBalance] = useState('0');
@@ -34,13 +36,12 @@ export function Staking() {
       const signer = await provider.getSigner();
       const address = await signer.getAddress();
       
-      const tokenAddress = 'NOVO_ENDEREÇO_DO_CONTRATO';
       const tokenAbi = [
         "function getStakingBalance(address) view returns (uint256)",
         "function getPendingReward(address) view returns (uint256)"
       ];
       
-      const contract = new ethers.Contract(tokenAddress, tokenAbi, provider);
+      const contract = new ethers.Contract(CONTRACT_ADDRESS, tokenAbi, provider);
       
       const balance = await contract.getStakingBalance(address);
       const rewards = await contract.getPendingReward(address);
@@ -76,17 +77,16 @@ export function Staking() {
       const provider = new ethers.BrowserProvider(window.ethereum);
       const signer = await provider.getSigner();
       
-      const tokenAddress = '0x8Eb1eEBfC0589dae5ac4adC63567cb670d907D6e';
       const tokenAbi = [
         "function stake(uint256 amount) public",
         "function approve(address spender, uint256 amount) public returns (bool)"
       ];
       
-      const contract = new ethers.Contract(tokenAddress, tokenAbi, signer);
+      const contract = new ethers.Contract(CONTRACT_ADDRESS, tokenAbi, signer);
       
       // First approve the contract to spend tokens
       const amount = ethers.parseEther(stakeAmount);
-      const approveTx = await contract.approve(tokenAddress, amount);
+      const approveTx = await contract.approve(CONTRACT_ADDRESS, amount);
       await approveTx.wait();
       
       // Then stake
@@ -121,10 +121,9 @@ export function Staking() {
       const provider = new ethers.BrowserProvider(window.ethereum);
       const signer = await provider.getSigner();
       
-      const tokenAddress = '0x8Eb1eEBfC0589dae5ac4adC63567cb670d907D6e';
       const tokenAbi = ["function unstake() public"];
       
-      const contract = new ethers.Contract(tokenAddress, tokenAbi, signer);
+      const contract = new ethers.Contract(CONTRACT_ADDRESS, tokenAbi, signer);
       const tx = await contract.unstake();
       await tx.wait();
       

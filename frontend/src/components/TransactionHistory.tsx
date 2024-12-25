@@ -30,7 +30,7 @@ export function TransactionHistory() {
     async function fetchTransactions() {
       try {
         const provider = new ethers.BrowserProvider(window.ethereum);
-        const tokenAddress = 'NOVO_ENDEREÇO_DO_CONTRATO';
+        const tokenAddress = '0xB47d6CD97E198b001Ec46ed716d73b5f07452160';
         const tokenAbi = [
           "event Transfer(address indexed from, address indexed to, uint256 value)"
         ];

@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
+  <!-- Dog outline -->
+  <path d="M50 150 C30 120, 40 70, 100 50 C160 70, 170 120, 150 150 Z" 
+        fill="none" stroke="#c6802b" stroke-width="4" />
+
+  <!-- Ears -->
+  <path d="M70 50 L90 10 L110 50" fill="none" stroke="#c6802b" stroke-width="4" />
+  <path d="M130 50 L110 10 L90 50" fill="none" stroke="#c6802b" stroke-width="4" />
+
+  <!-- Head -->
+  <circle cx="100" cy="80" r="20" fill="none" stroke="#c6802b" stroke-width="4" />
+
+  <!-- Body -->
+  <ellipse cx="100" cy="130" rx="40" ry="50" fill="none" stroke="#c6802b" stroke-width="4" />
+</svg>

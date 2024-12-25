@@ -11,35 +11,43 @@ import {
   AlertIcon,
   AlertTitle,
   AlertDescription,
+  Icon,
+  HStack,
 } from '@chakra-ui/react';
 import { ethers } from 'ethers';
-import { FaBrain } from 'react-icons/fa';
+import { FaBrain, FaCheck, FaTimes } from 'react-icons/fa';
 
 interface Question {
   text: string;
   explanation: string;
+  correctAnswer: boolean;
 }
 
 const questions: Question[] = [
   {
     text: "Bitcoin was the first implementation of blockchain technology.",
-    explanation: "While Bitcoin was the first successful cryptocurrency, blockchain concepts were described earlier in academic papers."
+    explanation: "While Bitcoin was the first successful cryptocurrency, blockchain concepts were described earlier in academic papers.",
+    correctAnswer: true
   },
   {
     text: "Smart contracts can only be deployed on the Ethereum network.",
-    explanation: "Many blockchain platforms support smart contracts, including Solana, Cardano, and others."
+    explanation: "Many blockchain platforms support smart contracts, including Solana, Cardano, and others.",
+    correctAnswer: false
   },
   {
     text: "Proof of Work (PoW) consensus requires computational power to validate transactions.",
-    explanation: "PoW miners compete to solve complex mathematical puzzles, consuming significant computational power."
+    explanation: "PoW miners compete to solve complex mathematical puzzles, consuming significant computational power.",
+    correctAnswer: true
   },
   {
     text: "Public blockchains allow anyone to participate in the network.",
-    explanation: "Public blockchains are permissionless and open for anyone to join, unlike private blockchains."
+    explanation: "Public blockchains are permissionless and open for anyone to join, unlike private blockchains.",
+    correctAnswer: true
   },
   {
     text: "NFTs can only be used for digital art.",
-    explanation: "NFTs can represent any unique digital or real-world asset, not just art."
+    explanation: "NFTs can represent any unique digital or real-world asset, not just art.",
+    correctAnswer: false
   }
 ];
 
@@ -47,6 +55,7 @@ export function Quiz() {
   const [answers, setAnswers] = useState<boolean[]>(new Array(5).fill(false));
   const [submitted, setSubmitted] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [allCorrect, setAllCorrect] = useState(false);
   const toast = useToast();
 
   async function handleSubmit() {
@@ -55,7 +64,7 @@ export function Quiz() {
       const provider = new ethers.BrowserProvider(window.ethereum);
       const signer = await provider.getSigner();
       
-      const tokenAddress = 'NOVO_ENDEREÇO_DO_CONTRATO';
+      const tokenAddress = '0xB47d6CD97E198b001Ec46ed716d73b5f07452160';
       const tokenAbi = [
         "function submitQuizAnswers(bool[5] answers) external",
         "function hasCompletedQuiz(address) view returns (bool)"
@@ -75,14 +84,20 @@ export function Quiz() {
         return;
       }
 
+      // Check if all answers are correct before submitting
+      const isAllCorrect = answers.every((answer, index) => answer === questions[index].correctAnswer);
+      setAllCorrect(isAllCorrect);
+
       const tx = await contract.submitQuizAnswers(answers);
       await tx.wait();
       
       setSubmitted(true);
       toast({
-        title: 'Quiz submitted!',
-        description: 'Check your wallet for SCOTT tokens if you got all answers correct!',
-        status: 'success',
+        title: isAllCorrect ? 'Congratulations!' : 'Quiz completed',
+        description: isAllCorrect 
+          ? 'You got all answers correct and received 10 SCOTT tokens!' 
+          : 'Some answers were incorrect. Try again with a different wallet to earn tokens.',
+        status: isAllCorrect ? 'success' : 'info',
         duration: 5000,
       });
     } catch (error) {
@@ -143,9 +158,17 @@ export function Quiz() {
                 Mark as True
               </Checkbox>
               {submitted && (
-                <Text fontSize="sm" color="purple.300" fontStyle="italic">
-                  {question.explanation}
-                </Text>
+                <Box>
+                  <HStack spacing={2} color={answers[index] === question.correctAnswer ? "green.300" : "red.300"}>
+                    <Icon as={answers[index] === question.correctAnswer ? FaCheck : FaTimes} />
+                    <Text fontWeight="500">
+                      {answers[index] === question.correctAnswer ? "Correct!" : "Incorrect!"}
+                    </Text>
+                  </HStack>
+                  <Text fontSize="sm" color="purple.300" fontStyle="italic" mt={1}>
+                    {question.explanation}
+                  </Text>
+                </Box>
               )}
             </VStack>
           </Box>
@@ -163,6 +186,21 @@ export function Quiz() {
         >
           Submit Answers
         </Button>
+
+        {submitted && (
+          <Alert
+            status={allCorrect ? "success" : "warning"}
+            variant="subtle"
+            borderRadius="md"
+          >
+            <AlertIcon />
+            <AlertDescription>
+              {allCorrect
+                ? "Congratulations! You answered all questions correctly and earned 10 SCOTT tokens!"
+                : "Some answers were incorrect. You can try again with a different wallet to earn tokens."}
+            </AlertDescription>
+          </Alert>
+        )}
       </VStack>
     </Box>
   );
